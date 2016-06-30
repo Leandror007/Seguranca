@@ -2,7 +2,7 @@ var app = angular.module('menuModule',[]);
 
 app.controller('menuController',function($scope,$http,$window){
 	
-	var url = 'http://localhost:8080/Seguranca/rs/sistema';
+	var url = 'http://localhost:8080/Seguranca/rs/sistema/usuarioLogado';
 	var urlLogout = 'http://localhost:8080/Seguranca/rs/logout';
 	
 //	$scope.sistemas = [{"url":"http://localhost:8080/SistemaEcommerce","nome":"Sistema Ecommerce"},

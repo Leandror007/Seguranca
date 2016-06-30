@@ -13,8 +13,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
+@XmlRootElement
 @Table(name="TB_ROLE")
 public class Role implements Serializable {
 	
@@ -62,6 +65,7 @@ public class Role implements Serializable {
 		this.nome = nome;
 	}
 
+	@XmlTransient
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}

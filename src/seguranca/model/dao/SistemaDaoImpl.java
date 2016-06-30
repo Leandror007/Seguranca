@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 
 import seguranca.model.domain.Role;
 import seguranca.model.domain.Sistema;
@@ -22,7 +23,7 @@ public class SistemaDaoImpl implements SistemaDao {
 	private HttpServletRequest request;
 
 	@Override
-	public List<Sistema> getSistemas() {
+	public List<Sistema> getSistemasUsuarioLogado() {
 		String usuarioLogado = request.getUserPrincipal().getName();
 		Query query = entityManager.createQuery("from Usuario u left join fetch u.roles "
 				+ "where u.login = :login");
@@ -35,6 +36,36 @@ public class SistemaDaoImpl implements SistemaDao {
 			}
 		}
 		return sistemas;
+	}
+	
+	@Override
+	@SuppressWarnings("unchecked")
+	public List<Sistema> getSistemas() {
+		StringBuffer hql = new StringBuffer("from Sistema r"
+				+ " where 1 = 1");	
+		Query query = entityManager.createQuery(hql.toString());
+		return query.getResultList();
+	}
+	
+	@Override
+	@Transactional
+	public void excluir(Sistema sistema) {
+		sistema = entityManager.merge(sistema);
+		entityManager.remove(sistema);
+	}
+
+	@Override
+	@Transactional
+	public Sistema salvar(Sistema sistema) {
+		entityManager.persist(sistema);
+		return sistema;
+	}
+
+	@Override
+	@Transactional
+	public void atualizar(Sistema sistema) {
+		sistema = entityManager.merge(sistema);
+		entityManager.persist(sistema);		
 	}
 
 }

@@ -6,14 +6,11 @@ import seguranca.model.domain.Sistema;
 
 public interface SistemaDao {
 
-	List<Sistema> getSistemasUsuarioLogado();
-	
 	List<Sistema> getSistemas();
-	
 	public void excluir(Sistema sistema);
-	
-	public Sistema salvar(Sistema sistema);
-	
-	public void atualizar(Sistema sistema);
+	Sistema salvar(Sistema sistema);
+	void atualizar(Sistema sistema);
+	List<Sistema> getSistemas(Sistema sistema);
+
 
 }

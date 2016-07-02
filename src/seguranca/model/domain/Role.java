@@ -13,17 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-@XmlRootElement
 @Table(name="TB_ROLE")
 public class Role implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,16 +27,15 @@ public class Role implements Serializable {
 	@Column(name="CD_ROLE")
 	private Integer codigo;
 	
+	@Size(min=5,message="Nome da Role precisa ter pelo menos 5 caracteres")
+	@NotNull(message="O campo nome é obrigatório")
 	@Column(name="NM_ROLE",length=60,unique=true)
 	private String nome;
 	
 	@ManyToMany
-	@JoinTable(name="TB_USUARIO_ROLE",
-					joinColumns=@JoinColumn(name="CD_ROLE"),
-					inverseJoinColumns=@JoinColumn(name="DS_LOGIN")
-			  )
+	@JoinTable(name="TB_USUARIO_ROLE", joinColumns=@JoinColumn(name="CD_ROLE"), inverseJoinColumns=@JoinColumn(name="DS_LOGIN"))
 	private List<Usuario> usuarios;
-	
+
 	@ManyToOne
 	@JoinColumn(name="CD_SISTEMA",referencedColumnName="CD_SISTEMA")
 	private Sistema sistema;
@@ -65,7 +60,6 @@ public class Role implements Serializable {
 		this.nome = nome;
 	}
 
-	@XmlTransient
 	public List<Usuario> getUsuarios() {
 		return usuarios;
 	}

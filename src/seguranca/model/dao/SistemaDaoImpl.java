@@ -23,7 +23,7 @@ public class SistemaDaoImpl implements SistemaDao {
 	private HttpServletRequest request;
 
 	@Override
-	public List<Sistema> getSistemasUsuarioLogado() {
+	public List<Sistema> getSistemas() {
 		String usuarioLogado = request.getUserPrincipal().getName();
 		Query query = entityManager.createQuery("from Usuario u left join fetch u.roles "
 				+ "where u.login = :login");
@@ -37,21 +37,30 @@ public class SistemaDaoImpl implements SistemaDao {
 		}
 		return sistemas;
 	}
+
 	
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<Sistema> getSistemas() {
-		StringBuffer hql = new StringBuffer("from Sistema r"
-				+ " where 1 = 1");	
+	public List<Sistema> getSistemas(Sistema sistema) {
+		StringBuffer hql = new StringBuffer("from Sistema c"
+				+ " where 1 = 1");		
+		if (sistema.getCodigo() != null) {
+			hql.append(" and c.codigo = :codigo");
+		}
 		Query query = entityManager.createQuery(hql.toString());
+		if (sistema.getCodigo() != null) {
+			query.setParameter("codigo",sistema.getCodigo());
+		} 
 		return query.getResultList();
 	}
 	
+		
 	@Override
 	@Transactional
 	public void excluir(Sistema sistema) {
 		sistema = entityManager.merge(sistema);
 		entityManager.remove(sistema);
+		
 	}
 
 	@Override
@@ -65,7 +74,8 @@ public class SistemaDaoImpl implements SistemaDao {
 	@Transactional
 	public void atualizar(Sistema sistema) {
 		sistema = entityManager.merge(sistema);
-		entityManager.persist(sistema);		
+		entityManager.persist(sistema);	
+		
 	}
 
 }

@@ -12,15 +12,18 @@
 	<script src="js/bootstrap.min.js"></script>	
 	<script src="control/menuControl.js"></script>
 
+
   </head>
   <body ng-controller="menuController">
 
 	<table class="table table-hover">
   		<th>Menu de sistemas disponíveis ERP</th>
-  		<tr ng-repeat="sistema in sistemas">
+  		 <tr ng-repeat="sistema in sistemas">
   			<td><a href={{sistema.url}} target="_blank">{{sistema.nome}}</a></td>
-  		</tr>
+  			
+  		</tr>  		
 	</table>
+	
 	
 	<button type="button" class="btn btn-default" ng-click="logout()">Logout</button>
 	

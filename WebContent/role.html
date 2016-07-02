@@ -1,0 +1,125 @@
+<html lang="en" ng-app="roleModule">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Sistema Pedidos - Tela de SMS</title>
+
+    <!-- Bootstrap -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.min.css">	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+	<script src="control/role.js"></script>
+
+  </head>
+  <body ng-controller="roleController">
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.min.js"></script>
+	<div ng-include src="'menu.html'"></div>
+	
+	<div>
+
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#cadastro" aria-controls="cadastro" role="tab" data-toggle="tab">Cadastro</a></li>
+    <li role="presentation"><a href="#dados" aria-controls="dados" role="tab" data-toggle="tab">Dados</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="cadastro">
+	
+	
+	
+	
+	<form class="form-horizontal">
+	<br/>
+	<div class="form-group">
+		<div class="col-sm-5">
+			<button type="button" class="btn btn-info" ng-click="novo()">Novo</button>
+			<button type="submit" class="btn btn-success">Salvar</button>
+			<button type="button" class="btn btn-danger" ng-click="excluir()">Excluir</button>
+			<button type="button" class="btn btn-warning" ng-click="pesquisar()">Pesquisar</button>
+			<hr/>
+						
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label for="codigo" class="col-sm-1 control-label">Código</label>
+		<div class="col-sm-5">
+			<input type="code" class="form-control" disabled="true" ng-model="role.codigo" placeholder="Código">
+		</div>	
+	</div>
+	<div class="form-group">
+		<label for="mensagem" class="col-sm-1 control-label">Nome</label>
+		<div class="col-sm-5">
+			<input type="text" class="form-control" ng-model="role.nome" placeholder="nome">
+		</div>	
+	</div>		
+		<br>		
+	<div class="form-group">
+		<label for="nome" class="col-sm-1 control-label">Nome Host</label>
+		<div class="col-sm-5">
+			<select class="form-control" 
+			    ng-model="sistemaRSelecionado"
+				ng-options="sistema.nome for sistema in sistemas track by sistema.codigo"
+				ng-change="alterarUrlRegisto();">
+			</select>
+		</div>
+	</div>
+	<div class="form-group">	
+		<div class="col-sm-5">
+			<table class="table table-hover">
+				<tr>	
+					<th>Código</th>
+					<th>URL</th>			
+				</tr>
+				<tr ng-repeat="sistema in sistemasRs" 
+				ng-click="selecionaSistemaView(sistema);">
+					<td>{{sistema.codigo}}</td>
+					<td>{{sistema.url}}</td>
+				</tr>
+			</table>						
+		</div>
+	</div>
+										
+</form>
+		
+	</div>
+    	<div role="tabpanel" class="tab-pane" id="dados">	
+	<br>
+	
+	<div class="form-group">
+		<input type="text" class="form-control" id="pesquisa" placeholder="Digite algo para pesquisar">
+	</div>
+	
+	<table class="table table-hover">
+		<tr>	
+			<th>Código</th>
+			<th>Nome</th>
+			<th>Codigo Sistema</th>								
+		</tr>
+		<tr ng-repeat="role in roles" ng-click="seleciona(role);">
+			<td>{{role.codigo}}</td>
+			<td>{{role.nome}}</td>
+			<td>{{role.sistema.codigo}}</td>
+		</tr>
+	</table>	
+	</div>
+  </div>
+
+</div>
+	
+	
+	
+	
+  </body>
+</html>

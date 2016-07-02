@@ -10,11 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlTransient;
 
 @Entity
-@XmlRootElement
 @Table(name="TB_SISTEMA")
 public class Sistema implements Serializable {
 	
@@ -28,9 +28,14 @@ public class Sistema implements Serializable {
 	@Column(name="CD_SISTEMA")
 	private Integer codigo;
 	
+	@Size(min=5,message="Nome do sistema precisa ter pelo menos 5 caracteres")
+	@NotNull(message="O campo nome é obrigatório")
 	@Column(name="NM_SISTEMA",nullable=false,length=100)
 	private String nome;
 	
+	
+	@Size(min=10,message="Nome da URL precisa ter pelo menos 10 caracteres")
+	@NotNull(message="O campo nome é obrigatório")
 	@Column(name="DS_URL",length=255,nullable=false)
 	private String url;
 	
@@ -71,9 +76,7 @@ public class Sistema implements Serializable {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
-	}
+
 
 	@Override
 	public int hashCode() {
